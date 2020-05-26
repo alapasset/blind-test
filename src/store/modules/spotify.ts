@@ -67,7 +67,7 @@ class Spotify extends VuexModule {
 
       if (response.status === 200) {
         const expireIn: Date = new Date()
-        expireIn.setMinutes(expireIn.getMinutes() + response.data.expires_in)
+        expireIn.setMinutes(expireIn.getMinutes() + response.data.expires_in / 60)
         this.setRefreshToken(response.data.refresh_token)
         this.setAccessToken(response.data.access_token)
         this.setAccessTokenExpireEpoch(expireIn)
@@ -99,7 +99,7 @@ class Spotify extends VuexModule {
       if (response.status === 200) {
         console.log(response)
         const expireIn: Date = new Date()
-        expireIn.setMinutes(expireIn.getMinutes() + response.data.expires_in)
+        expireIn.setMinutes(expireIn.getMinutes() + response.data.expires_in / 60)
         this.setAccessToken(response.data.access_token)
         this.setAccessTokenExpireEpoch(expireIn)
       }
@@ -133,7 +133,8 @@ class Spotify extends VuexModule {
   public async getPlaylistInformations(playlistId: string): Promise<Playlist> {
     try {
       const call = Axios.create()
-      const response = await call(`https://api.spotify.com/v1/playlists/${playlistId}`, {
+      const fields = 'id,name,tracks.items(track(id,name,preview_url,artists,external_urls(spotify),album(images)))'
+      const response = await call(`https://api.spotify.com/v1/playlists/${playlistId}?fields=${encodeURIComponent(fields)}`, {
         headers: {
           Authorization: `Bearer ${this.accessToken}`
         },

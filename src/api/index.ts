@@ -1,8 +1,11 @@
 import axios from 'axios'
 
 const config = {
-  baseURL: 'https://jsonplaceholder.typicode.com',
-  headers: { Accept: 'application/json' }
+  baseURL: 'http://localhost:8081',
+  headers: {
+    'Access-Control-Allow-Origin': '*',
+    'Content-Type': 'application/json'
+  }
 }
 
 const call = axios.create(config)
