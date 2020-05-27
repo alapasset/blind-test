@@ -1,10 +1,10 @@
 <template>
   <el-container>
-    <el-header style="font-size: 24px; text-align: center">Spotify - Authentification</el-header>
+    <el-header style="font-size: 24px; text-align: center">Source - Authentification</el-header>
 
     <el-main>
       <div v-if="needLogin">
-        <el-button @click="goToSpotifyConnexion()">Spotify Login</el-button>
+        <el-button @click="goToMusicSourceConnexion()">MusicSource Login</el-button>
       </div>
       <div v-else>
         <el-table :data="[info]" stripe border style="width: 100%">
@@ -24,28 +24,28 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { SpotifyModule } from '@/store/modules/spotify'
+import { MusicSourceModule } from '@/store/modules/music-source'
 
 @Component({
   created: function() {
     if (this.$route.query.code) {
-      SpotifyModule.setCode(this.$route.query.code.toString())
-      SpotifyModule.getNewAuthorization()
+      MusicSourceModule.setCode(this.$route.query.code.toString())
+      MusicSourceModule.getNewAuthorization()
       this.$router.push({ name: 'admin' })
     }
   }
 })
-export default class SpotifyAuthentification extends Vue {
+export default class MusicSourceAuthentification extends Vue {
   get info() {
-    return SpotifyModule
+    return MusicSourceModule
   }
 
   get needLogin() {
-    return SpotifyModule.mustHaveNewAuthorization
+    return MusicSourceModule.mustHaveNewAuthorization
   }
 
-  goToSpotifyConnexion() {
-    location.replace(SpotifyModule.authUrl)
+  goToMusicSourceConnexion() {
+    location.replace(MusicSourceModule.authUrl)
   }
 }
 </script>

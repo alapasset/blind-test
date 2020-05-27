@@ -2,12 +2,12 @@
   <div class="home">
     <el-container>
       <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
-        <el-menu :default-openeds="['1']">
+        <el-menu :default-openeds="['1, 2']">
           <el-submenu index="1">
-            <template slot="title"><i class="el-icon-message"></i>Spotify</template>
+            <template slot="title"><i class="el-icon-message"></i>Source</template>
             <el-menu-item-group>
-              <el-menu-item @click="changeView('spotify-authentification')" index="1-1">Authentification</el-menu-item>
-              <el-menu-item @click="changeView('spotify-playlist')" index="1-2">Playliste</el-menu-item>
+              <el-menu-item @click="changeView('music-source-authentification')" index="1-1">Authentification</el-menu-item>
+              <el-menu-item @click="changeView('music-source-playlist')" index="1-2">Playliste</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
           <el-submenu index="2">
@@ -20,8 +20,8 @@
         </el-menu>
       </el-aside>
 
-      <SpotifyPlaylist v-if="checkMenu('spotify-playlist')" />
-      <SpotifyAuthentification v-if="checkMenu('spotify-authentification')" />
+      <MusicSourcePlaylist v-if="checkMenu('music-source-playlist')" />
+      <MusicSourceAuthentification v-if="checkMenu('music-source-authentification')" />
       <SalonsListeAdministration v-if="checkMenu('musichome-salons-liste')" />
       <SalonsCreationAdministration v-if="checkMenu('musichome-salons-creation')" />
     </el-container>
@@ -30,21 +30,21 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
-import SpotifyAuthentification from '@/views/admin/spotify/Authentification.vue'
-import SpotifyPlaylist from '@/views/admin/spotify/Playlist.vue'
+import MusicSourceAuthentification from '@/views/admin/music-source/Authentification.vue'
+import MusicSourcePlaylist from '@/views/admin/music-source/Playlist.vue'
 import SalonsListeAdministration from '@/views/admin/api/SalonsListeAdministration.vue'
 import SalonsCreationAdministration from '@/views/admin/api/SalonsCreationAdministration.vue'
 
 @Component({
   components: {
-    SpotifyAuthentification,
-    SpotifyPlaylist,
+    MusicSourceAuthentification,
+    MusicSourcePlaylist,
     SalonsListeAdministration,
     SalonsCreationAdministration
   }
 })
 export default class Admin extends Vue {
-  selectedMenu = 'spotify-authentification'
+  selectedMenu = 'music-source-authentification'
 
   changeView(selectedMenu: string) {
     this.selectedMenu = selectedMenu

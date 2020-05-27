@@ -1,6 +1,6 @@
 <template>
   <el-container>
-    <el-header style="font-size: 24px; text-align: center">Spotify - Playlist</el-header>
+    <el-header style="font-size: 24px; text-align: center">Source - Playlist</el-header>
 
     <el-main v-if="needLogin">
       Vous devenez vous loguer
@@ -49,21 +49,21 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { SpotifyModule } from '@/store/modules/spotify'
-import { Playlist, PlaylistTrack } from '@/store/spotify.models'
+import { MusicSourceModule } from '@/store/modules/music-source'
+import { Playlist, PlaylistTrack } from '@/store/music-source.models'
 import call from '@/api'
 
 @Component({})
-export default class SpotifyPlaylist extends Vue {
+export default class MusicSourcePlaylist extends Vue {
   playlist_id = '7oBeEkujcRybm7dCAUAIhG'
   playlist = {}
 
   get needLogin() {
-    return SpotifyModule.mustHaveNewAuthorization
+    return MusicSourceModule.mustHaveNewAuthorization
   }
 
   async searchPlaylist() {
-    this.playlist = (await SpotifyModule.getPlaylistInformations(this.playlist_id)) as Playlist
+    this.playlist = (await MusicSourceModule.getPlaylistInformations(this.playlist_id)) as Playlist
   }
 
   async addPlaylistToBack() {

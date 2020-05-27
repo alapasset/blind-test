@@ -1,14 +1,14 @@
 import store from '@/store'
-import { Playlist } from '@/store/spotify.models'
+import { Playlist } from '@/store/music-source.models'
 import Axios from 'axios'
 import { Action, getModule, Module, Mutation, VuexModule } from 'vuex-module-decorators'
 
 @Module({
   dynamic: true,
   store,
-  name: 'spotify'
+  name: 'music-source'
 })
-class Spotify extends VuexModule {
+class MusicSource extends VuexModule {
   public code = ''
   public accessToken = ''
   public refreshToken = ''
@@ -134,7 +134,7 @@ class Spotify extends VuexModule {
     try {
       const call = Axios.create()
       const fields = 'id,name,tracks.items(track(id,name,preview_url,artists,external_urls(spotify),album(images)))'
-      const response = await call(`https://api.spotify.com/v1/playlists/${playlistId}`, {
+      const response = await call(`https://api.spotify.com/v1/playlists/${playlistId}?fields=${fields}`, {
         headers: {
           Authorization: `Bearer ${this.accessToken}`
         },
@@ -163,4 +163,4 @@ class Spotify extends VuexModule {
     }
   }
 }
-export const SpotifyModule = getModule(Spotify)
+export const MusicSourceModule = getModule(MusicSource)
