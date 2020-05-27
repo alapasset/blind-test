@@ -16,26 +16,26 @@
         <el-table :data="formatPlaylistInformations(playlist)" stripe border style="width: 100%; margin-top: 10px">
           <el-table-column type="index" width="50"> </el-table-column>
           <el-table-column label="Image" width="100">
-            <template slot-scope="scopeImage">
-              <el-image :src="scopeImage.row.image"></el-image>
+            <template slot-scope="scope">
+              <el-image :src="scope.row.image"></el-image>
             </template>
           </el-table-column>
           <el-table-column sortable label="Titre">
-            <template slot-scope="scopeTitle">
-              <el-link :href="scopeTitle.row.url" target="_blank">{{ scopeTitle.row.title }}</el-link>
+            <template slot-scope="scope">
+              <el-link :href="scope.row.url" target="_blank">{{ scope.row.title }}</el-link>
             </template>
           </el-table-column>
           <el-table-column label="Artiste(s)">
-            <template slot-scope="scopeArtists">
-              <div v-for="(val, key, index) in scopeArtists.row.artists" v-bind:key="key">
+            <template slot-scope="scope">
+              <div v-for="(val, index) in scope.row.artists" :key="val.id">
                 <el-link :href="val.external_urls.spotify" target="_blank">{{ val.name }}</el-link>
-                <span v-if="index != Object.keys(scopeArtists.row.artists).length - 1"> / </span>
+                <span v-if="index != Object.keys(scope.row.artists).length - 1"> / </span>
               </div>
             </template>
           </el-table-column>
           <el-table-column label="Extrait">
-            <template slot-scope="scopeExtract" name="tpl-extract">
-              <audio controls v-bind:src="scopeExtract.row.previewUrl">
+            <template slot-scope="scope" name="tpl-extract">
+              <audio controls v-bind:src="scope.row.previewUrl">
                 Your browser does not support the
                 <code>audio</code> element.
               </audio>
@@ -50,7 +50,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { SpotifyModule } from '@/store/modules/spotify'
-import { Artist, Playlist, PlaylistTrack } from '@/store/models'
+import { Playlist, PlaylistTrack } from '@/store/spotify.models'
 import call from '@/api'
 
 @Component({})

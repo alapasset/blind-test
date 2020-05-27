@@ -12,8 +12,9 @@
           </el-submenu>
           <el-submenu index="2">
             <template slot="title"><i class="el-icon-menu"></i>Music Home</template>
-            <el-menu-item-group>
-              <el-menu-item @click="changeView('musichome-salon')" index="2-1">Salons</el-menu-item>
+            <el-menu-item-group title="Salon">
+              <el-menu-item @click="changeView('musichome-salons-liste')" index="2-1">Liste des salons</el-menu-item>
+              <el-menu-item @click="changeView('musichome-salons-creation')" index="2-2">Créer un salon</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
         </el-menu>
@@ -21,6 +22,8 @@
 
       <SpotifyPlaylist v-if="checkMenu('spotify-playlist')" />
       <SpotifyAuthentification v-if="checkMenu('spotify-authentification')" />
+      <SalonsListeAdministration v-if="checkMenu('musichome-salons-liste')" />
+      <SalonsCreationAdministration v-if="checkMenu('musichome-salons-creation')" />
     </el-container>
   </div>
 </template>
@@ -29,11 +32,15 @@
 import { Vue, Component } from 'vue-property-decorator'
 import SpotifyAuthentification from '@/views/admin/spotify/Authentification.vue'
 import SpotifyPlaylist from '@/views/admin/spotify/Playlist.vue'
+import SalonsListeAdministration from '@/views/admin/api/SalonsListeAdministration.vue'
+import SalonsCreationAdministration from '@/views/admin/api/SalonsCreationAdministration.vue'
 
 @Component({
   components: {
     SpotifyAuthentification,
-    SpotifyPlaylist
+    SpotifyPlaylist,
+    SalonsListeAdministration,
+    SalonsCreationAdministration
   }
 })
 export default class Admin extends Vue {
